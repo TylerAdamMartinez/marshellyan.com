@@ -1,0 +1,8 @@
+baseURL = 'https://marshellyan.com/'
+languageCode = 'en-us'
+title = 'Marshellyan'
+
+[taxonomies]
+    type = "types"
+    group = "groups"
+    tag = "tags"
