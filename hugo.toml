@@ -1,6 +1,7 @@
 baseURL = 'https://marshellyan.com/'
 languageCode = 'en-us'
 title = 'Marshellyan'
+theme = "archie"
 
 [taxonomies]
     type = "types"
