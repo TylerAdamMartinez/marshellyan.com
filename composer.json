@@ -1,0 +1,9 @@
+{
+    "name": "tyler/tyler",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
