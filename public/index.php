@@ -7,4 +7,11 @@ use App\Controller\HttpController;
 Route::get('/', [HttpController::class, 'index']);
 Route::get('/about', [HttpController::class, 'about']);
 
+Route::group('/api', function () {
+  Route::get('/User', function () {
+    $array = ["username" => "fonzie", "password" => "penis1234"];
+    echo json_encode($array);
+  });
+});
+
 Route::launch();

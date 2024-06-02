@@ -72,6 +72,5 @@ class Router
     {
         $path = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<\1>[a-zA-Z0-9_-]+)', $path);
         return "#^{$path}$#";
-
     }
 }
