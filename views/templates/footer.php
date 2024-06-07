@@ -3,14 +3,13 @@
         <div class="footer-content">
             <p>&copy; <?php echo date("Y"); ?> Your Company. All Rights Reserved.</p>
             <ul class="footer-links">
-                <li><a href="privacy-policy.php">Privacy Policy</a></li>
-                <li><a href="terms-of-service.php">Terms of Service</a></li>
-                <li><a href="contact-us.php">Contact Us</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/terms-of-service">Terms of Service</a></li>
+                <li><a href="/contact-us">Contact Us</a></li>
             </ul>
         </div>
     </footer>
-
     <!-- JavaScript Files -->
-    <script defer src="path/to/jquery.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </body>
 </html>

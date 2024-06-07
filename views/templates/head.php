@@ -19,10 +19,10 @@
     <meta property="og:image" content="<?php echo $pageImage; ?>">
     
     <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="<?php echo $summaryImageURI; ?>">
     <meta name="twitter:title" content="<?php echo $pageTitle; ?>">
     <meta name="twitter:description" content="<?php echo $pageDescription; ?>">
-    <meta name="twitter:image" content="<?php echo $pageImage; ?>">
+    <meta name="twitter:image" content="<?php echo $pageImage; ?>>
     
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
