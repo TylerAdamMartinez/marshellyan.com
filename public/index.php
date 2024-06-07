@@ -12,6 +12,10 @@ Route::group('/api', function () {
     $array = ["username" => "fonzie", "password" => "penis1234"];
     echo json_encode($array);
   });
+  Route::get('/User/{userId}', function ($userId) {
+    $array = ["username" => "fonzie", "password" => "penis1234", "user_id" => $userId];
+    echo json_encode($array);
+  });
 });
 
 Route::launch();

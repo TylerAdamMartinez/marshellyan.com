@@ -2,6 +2,9 @@
 
 namespace App\Core;
 
+use FastRoute\RouteCollector;
+use function FastRoute\simpleDispatcher;
+
 class Router
 {
     private $routes = [];
@@ -42,24 +45,38 @@ class Router
 
     public function dispatch($method, $path)
     {
+      $path = rtrim($path, '/') ?: '/';
+
+      $dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
         foreach ($this->routes as $route) {
-            $pattern = $this->convertToRegex($route['path']);
-            if ($route['method'] === $method && preg_match($pattern, $path, $matches)) {
-                array_shift($matches); // Remove the full match from the results
-
-                if (is_array($route['handler'])) {
-                    list($controller, $method) = $route['handler'];
-                    $controllerInstance = new $controller();
-
-                    return call_user_func_array([$controllerInstance, $method], $matches);
-                } else {
-                    return call_user_func_array($route['handler'], $matches);
-                }
-            }
+          $routeCollector->addRoute($route['method'], $route['path'], $route['handler']);
         }
+      });
 
-        http_response_code(404);
-        echo "404 Not Found";
+      $routeInfo = $dispatcher->dispatch($method, $path);
+
+      switch ($routeInfo[0]) {
+        case \FastRoute\Dispatcher::NOT_FOUND:
+          http_response_code(404);
+          echo "404 Not Found";
+          break;
+        case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+          http_response_code(405);
+          echo "405 Method Not Allowed";
+          break;
+        case \FastRoute\Dispatcher::FOUND:
+          $handler = $routeInfo[1];
+          $vars = $routeInfo[2];
+
+          if (is_array($handler)) {
+            list($controller, $method) = $handler;
+            $controllerInstance = new $controller();
+
+            return call_user_func_array([$controllerInstance, $method], $vars);
+          } else {
+            return call_user_func_array($handler, $vars);
+          }
+        }
     }
 
     private function add($method, $path, $handler)
@@ -67,10 +84,5 @@ class Router
         $path = ($this->groupPrefix ?? '') . $path;
         $this->routes[] = compact('method', 'path', 'handler');
     }
-
-    private function convertToRegex($path)
-    {
-        $path = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<\1>[a-zA-Z0-9_-]+)', $path);
-        return "#^{$path}$#";
-    }
 }
+
